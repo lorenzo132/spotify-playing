@@ -1,18 +1,20 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #2596be;
+    background-color: #2596be; /* Updated background color */
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     overflow: hidden;
+    position: relative;
 }
 
 #song-container {
     position: relative;
     text-align: center;
+    z-index: 1;
 }
 
 .card {
@@ -23,7 +25,6 @@ body {
     max-width: 600px;
     margin: 20px auto; /* Add margin for spacing around the card */
     position: relative;
-    z-index: 1;
     min-height: 200px; /* Ensure there's enough height to center content */
 }
 
@@ -66,4 +67,17 @@ img {
     top: 100%;
     font-size: 12px;
     margin-top: 5px;
+}
+
+.overlay {
+    display: none;
+    background-image: url('https://fle.lvh.lol/file/shxshx/Gannet/groot-bebe-escuchando-musica-6450.webp');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
 }
