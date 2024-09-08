@@ -152,6 +152,7 @@ app.get("/current-playing", ensureAccessToken, (req, res) => {
             <div class="card" id="song-info">
                 <!-- Content will be populated by JavaScript -->
             </div>
+            <div id="no-song"></div>
         </div>
     </body>
     </html>
