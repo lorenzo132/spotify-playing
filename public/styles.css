@@ -21,9 +21,10 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     padding: 20px;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 20px auto; /* Add margin for spacing around the card */
     position: relative;
     z-index: 1;
+    min-height: 200px; /* Ensure there's enough height to center content */
 }
 
 img {
@@ -33,7 +34,7 @@ img {
 
 #no-song {
     display: none;
-    background-image: url('https://fle.lvh.lol/file/shxshx/Greatdane/chrome_HwlXMWnZla.png');
+    background-image: url('https://fle.lvh.lol/file/shxshx/Gannet/groot-bebe-escuchando-musica-6450.webp');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -50,10 +51,19 @@ img {
     border-radius: 8px;
     height: 10px;
     margin-top: 10px;
+    position: relative;
 }
 
 .progress {
     background-color: #1db954;
     height: 100%;
     border-radius: 8px;
+}
+
+.progress-time {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    font-size: 12px;
+    margin-top: 5px;
 }
