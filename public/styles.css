@@ -1,82 +1,53 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #1c1c84;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-}
+document.addEventListener("DOMContentLoaded", function() {
+    let pauseStartTime = null;
 
-#song-container {
-    position: relative;
-    text-align: center;
-}
+    function formatTime(ms) {
+        const minutes = Math.floor(ms / 60000);
+        const seconds = ((ms % 60000) / 1000).toFixed(0);
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
 
-.card {
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    max-width: 600px;
-    margin: 20px auto; /* Add margin for spacing around the card */
-    position: relative;
-    z-index: 1;
-    min-height: 200px; /* Ensure there's enough height to center content */
-}
+    function updateSongInfo() {
+        fetch("/api/current-playing")
+            .then(response => response.json())
+            .then(data => {
+                const songInfoElement = document.getElementById("song-info");
+                const noSongElement = document.getElementById("no-song");
+                const overlayElement = document.querySelector(".overlay");
 
-img {
-    max-width: 100%;
-    border-radius: 8px;
-}
+                if (data.playing) {
+                    noSongElement.style.display = "none";
+                    overlayElement.style.display = "none";
+                    
+                    const progressPercentage = (data.progressMs / data.durationMs) * 100;
+                    songInfoElement.innerHTML = `
+                        <img src="${data.albumArt}" alt="${data.albumName}">
+                        <h2>${data.songName}</h2>
+                        <h3>${data.artistName}</h3>
+                        <p>${data.albumName}</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: ${progressPercentage}%"></div>
+                            <div class="progress-time">
+                                ${formatTime(data.progressMs)} / ${formatTime(data.durationMs)}
+                            </div>
+                        </div>
+                        ${data.previewUrl ? `<a href="${data.previewUrl}" class="download-button" download>Download</a>` : ''}
+                    `;
+                    pauseStartTime = null;
+                } else {
+                    if (pauseStartTime === null) {
+                        pauseStartTime = Date.now();
+                    } else if (Date.now() - pauseStartTime > 3000) { // 3 seconds in milliseconds
+                        songInfoElement.innerHTML = "";
+                        document.getElementById("song-container").style.display = "none";
+                        document.querySelector(".overlay").style.display = "block";
+                    }
+                }
+            })
+            .catch(error => console.error("Error fetching song data:", error));
+    }
 
-#no-song {
-    display: none;
-    background-image: url('https://fle.lvh.lol/file/shxshx/Gannet/groot-bebe-escuchando-musica-6450.webp');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-}
-
-.progress-bar {
-    width: 100%;
-    background-color: #555;
-    border-radius: 8px;
-    height: 10px;
-    margin-top: 10px;
-    position: relative;
-}
-
-.progress {
-    background-color: #1db954;
-    height: 100%;
-    border-radius: 8px;
-}
-
-.progress-time {
-    position: absolute;
-    width: 100%;
-    top: 100%;
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-.overlay {
-    display: none;
-    background-image: url('https://fle.lvh.lol/file/shxshx/Greatdane/chrome_HwlXMWnZla.png');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-}
+    // Update song info every 1 seconds
+    updateSongInfo();
+    setInterval(updateSongInfo, 1000);
+});
