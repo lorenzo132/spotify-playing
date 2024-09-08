@@ -26,10 +26,17 @@ document.addEventListener("DOMContentLoaded", function() {
                                 ${formatTime(data.progressMs)} / ${formatTime(data.durationMs)}
                             </div>
                         </div>
+                        ${data.previewUrl ? `<a href="${data.previewUrl}" class="download-button" download>Download</a>` : ''}
                     `;
                 } else {
                     noSongElement.style.display = "block";
                     songInfoElement.innerHTML = "";
+                    
+                    if (pauseStartTime === null) {
+                        pauseStartTime = Date.now();
+                    } else if (Date.now() - pauseStartTime > 3000) { // 3 seconds in milliseconds
+                        overlayElement.style.display = "block";
+                    }
                 }
             })
             .catch(error => console.error("Error fetching song data:", error));
