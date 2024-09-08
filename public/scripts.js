@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     } else if (Date.now() - pauseStartTime > 3000) { // 3 seconds in milliseconds
                         songInfoElement.innerHTML = "";
                         songContainerElement.style.display = "none";
-                        document.querySelector(".overlay").style.display = "none";
-                        document.getElementById("no-song").style.display = "block";
+                        overlayElement.style.display = "none";
+                        noSongElement.style.display = "block";
                     }
                 }
             })
