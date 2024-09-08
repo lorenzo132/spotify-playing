@@ -130,6 +130,11 @@ app.get("/callback", async (req, res) => {
   }
 });
 
+// Redirect root URL to /current-playing
+app.get("/", (req, res) => {
+  res.redirect("/current-playing");
+});
+
 // Step 3: Fetch Currently Playing Song and Render HTML
 app.get("/current-playing", ensureAccessToken, (req, res) => {
   res.send(`
