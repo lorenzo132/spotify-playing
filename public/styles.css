@@ -1,62 +1,59 @@
-/* styles.css */
-
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #001f3f; /* Navy blue background */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: navy;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#song-container {
+    position: relative;
+    text-align: center;
 }
 
 .card {
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 90%;
-  overflow: hidden;
-  text-align: center;
-  padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
-.album-art {
-  width: 100%;
-  height: auto;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 15px;
+img {
+    max-width: 100%;
+    border-radius: 8px;
 }
 
-.song-info h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-  color: #001f3f; /* Navy blue text for the title */
+#no-song {
+    display: none;
+    background-image: url('https://fle.lvh.lol/file/shxshx/Greatdane/chrome_HwlXMWnZla.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 
-.song-info p {
-  font-size: 18px;
-  color: #333;
-  margin: 5px 0;
+.progress-bar {
+    width: 100%;
+    background-color: #555;
+    border-radius: 8px;
+    height: 10px;
+    margin-top: 10px;
 }
 
-.song-info p strong {
-  color: #001f3f; /* Navy blue text for labels */
-}
-
-.time-bar-container {
-  width: 100%;
-  height: 8px;
-  background-color: #ddd;
-  margin: 15px 0;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-.time-bar {
-  height: 100%;
-  background-color: #001f3f; /* Navy blue for the progress */
-  transition: width 0.2s ease;
+.progress {
+    background-color: #1db954;
+    height: 100%;
+    border-radius: 8px;
 }
