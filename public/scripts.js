@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
+    let pauseStartTime = null;
+
     function formatTime(ms) {
         const minutes = Math.floor(ms / 60000);
         const seconds = ((ms % 60000) / 1000).toFixed(0);
@@ -11,9 +13,14 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
                 const songInfoElement = document.getElementById("song-info");
                 const noSongElement = document.getElementById("no-song");
+                const overlayElement = document.querySelector(".overlay");
+                const songContainerElement = document.getElementById("song-container");
 
                 if (data.playing) {
                     noSongElement.style.display = "none";
+                    overlayElement.style.display = "none";
+                    songContainerElement.style.display = "block";
+
                     const progressPercentage = (data.progressMs / data.durationMs) * 100;
                     songInfoElement.innerHTML = `
                         <img src="${data.albumArt}" alt="${data.albumName}">
@@ -28,14 +35,15 @@ document.addEventListener("DOMContentLoaded", function() {
                         </div>
                         ${data.previewUrl ? `<a href="${data.previewUrl}" class="download-button" download>Download</a>` : ''}
                     `;
+                    pauseStartTime = null;
                 } else {
-                    noSongElement.style.display = "block";
-                    songInfoElement.innerHTML = "";
-                    
                     if (pauseStartTime === null) {
                         pauseStartTime = Date.now();
                     } else if (Date.now() - pauseStartTime > 3000) { // 3 seconds in milliseconds
-                        overlayElement.style.display = "block";
+                        songInfoElement.innerHTML = "";
+                        songContainerElement.style.display = "none";
+                        document.querySelector(".overlay").style.display = "none";
+                        document.getElementById("no-song").style.display = "block";
                     }
                 }
             })
