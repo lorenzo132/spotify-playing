@@ -13,12 +13,10 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
                 const songInfoElement = document.getElementById("song-info");
                 const noSongElement = document.getElementById("no-song");
-                const overlayElement = document.querySelector(".overlay");
                 const songContainerElement = document.getElementById("song-container");
 
                 if (data.playing) {
                     noSongElement.style.display = "none";
-                    overlayElement.style.display = "none";
                     songContainerElement.style.display = "block";
 
                     const progressPercentage = (data.progressMs / data.durationMs) * 100;
@@ -42,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     } else if (Date.now() - pauseStartTime > 3000) { // 3 seconds in milliseconds
                         songInfoElement.innerHTML = "";
                         songContainerElement.style.display = "none";
-                        overlayElement.style.display = "none";
                         noSongElement.style.display = "block";
                     }
                 }
