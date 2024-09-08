@@ -153,7 +153,7 @@ app.get("/current-playing", ensureAccessToken, (req, res) => {
                 <!-- Content will be populated by JavaScript -->
             </div>
             <div id="no-song"></div>
-        </div>
+        <div class="overlay"></div>
     </body>
     </html>
   `);
